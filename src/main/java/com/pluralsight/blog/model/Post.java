@@ -1,5 +1,6 @@
 package com.pluralsight.blog.model;
 
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -79,5 +80,16 @@ public class Post {
         Post otherPost = (Post)obj;
         return this.title.equals(otherPost.getTitle()) &&
                this.body.equals(otherPost.getBody());
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Author author;
+
+    public Author getAuthor(){
+        return author;
+    }
+
+    public void setAuthor(Author author){
+        this.author = new Author();
     }
 }

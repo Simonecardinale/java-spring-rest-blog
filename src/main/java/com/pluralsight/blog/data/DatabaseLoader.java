@@ -21,6 +21,8 @@ public class DatabaseLoader implements ApplicationRunner {
     public List<Post> randomPosts = new ArrayList<>();
     public List<Author> authors = new ArrayList<>();
     private final PostRepository postRepository;
+    AuthorRepository authorRepository1;
+
 
     @Autowired
     public DatabaseLoader(PostRepository repository) {
@@ -29,6 +31,14 @@ public class DatabaseLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        authors.addAll(Arrays.asList(
+                new Author("sholderness", "Sarah",  "Holderness", "password"),
+                new Author("tbell", "Tom",  "Bell", "password"),
+                new Author("efisher", "Eric",  "Fisher", "password"),
+                new Author("csouza", "Carlos",  "Souza", "password")
+        ));
+        authorRepository.saveAll(authors);
+
         IntStream.range(0,40).forEach(i->{
             String template = templates[i % templates.length];
             String gadget = gadgets[i % gadgets.length];
@@ -36,9 +46,15 @@ public class DatabaseLoader implements ApplicationRunner {
             String title = String.format(template, gadget);
             Post post = new Post(title, "Lorem ipsum dolor sit amet, consectetur adipiscing elit… ");
             randomPosts.add(post);
+
+            Author author = authors.get(i % authors.size());
+            post.setAuthor(author);
+            author.addPost(post);
         });
         postRepository.saveAll(randomPosts);
-
+        authorRepository.saveAll(authors);
     }
+
+    private final AuthorRepository authorRepository = this.authorRepository1;
 
 }
