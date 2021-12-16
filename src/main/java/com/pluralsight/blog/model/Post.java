@@ -73,6 +73,7 @@ public class Post {
         this.date = date;
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Post))
