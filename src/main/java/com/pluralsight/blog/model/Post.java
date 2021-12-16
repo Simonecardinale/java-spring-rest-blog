@@ -1,6 +1,6 @@
 package com.pluralsight.blog.model;
 
-
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
